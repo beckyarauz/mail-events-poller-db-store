@@ -4,7 +4,7 @@
   "description": "none",
   "main": "index.js",
   "scripts": {
-    "compile": "tsc interfaces.ts app.ts"
+    "compile": "tsc app.ts"
   },
   "author": "",
   "license": "ISC",
