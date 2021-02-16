@@ -2,14 +2,12 @@ build-env:
 	docker run -t -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} node:12 node -e 'console.log(process.env.AWS_ACCESS_KEY_ID);';
 	docker run -t -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} node:12 node -e 'console.log(process.env.AWS_SECRET_ACCESS_KEY);';
 	docker run -t -e AWS_REGION=${AWS_REGION} node:12 node -e 'console.log(process.env.AWS_REGION);';
-	docker run -t -e STATE_MACHINE_ARN=${STATE_MACHINE_ARN} node:12 node -e 'console.log(process.env.STATE_MACHINE_ARN);';
 
 build:
 	docker build -t ${PROJECT_NAME} .;
 
 run-local:
 	docker run -t  \
-	 -e STATE_MACHINE_ARN=${STATE_MACHINE_ARN} \
 	 -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
 	 -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
 	 -e AWS_REGION=${AWS_REGION} \

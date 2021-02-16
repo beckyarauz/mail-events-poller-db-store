@@ -1,7 +1,7 @@
-FROM public.ecr.aws/lambda/nodejs:12
+FROM public.ecr.aws/lambda/nodejs:14
 
 # Copy function code and package.json
-COPY app.ts package.json /var/task/
+COPY interfaces.ts app.ts package.json /var/task/
 
 # Install NPM dependencies for function
 RUN npm install

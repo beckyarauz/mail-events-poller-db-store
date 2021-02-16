@@ -1,43 +1,47 @@
 import {
-  APIGatewayProxyEvent,
-  APIGatewayProxyResult,
+  SQSEvent,
+  SNSMessage,
 } from 'aws-lambda';
-
 import * as AWS from 'aws-sdk';
+import { MailEventData, MailEventDocument } from './interfaces';
 
-const stepfunction = new AWS.StepFunctions();
+const db = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_REGION });
 
-interface StateMachineParams {
-  input: string;
-  stateMachineArn: string;
-}
+const writeEvent = (data: MailEventDocument): Promise<object> => {
+  const params = {
+    TableName: 'mail-events',
+    Item: data,
+  };
+
+  return db.put(params).promise();
+};
 
 export const handler = async (
-  event: APIGatewayProxyEvent
-): Promise<APIGatewayProxyResult> => {
-  event['event-data'].event = event['event-data'].event.toLowerCase();
+  event: SQSEvent
+): Promise<string> => {
+  for (const { messageId: id, body } of event.Records) {
+    const { Subject: type, Message: eventMessage } : SNSMessage = JSON.parse(body);
+    const eventData: MailEventData = eventMessage['event-data'];
+    const { message, storage } = eventData;
 
-  const params: StateMachineParams = {
-    input: JSON.stringify(event),
-    stateMachineArn: process.env.STATE_MACHINE_ARN || '',
+    const params: MailEventDocument = {
+      id,
+      type,
+      timestamp: new Date(eventData.timestamp).toISOString(),
+      eventId: eventData.id,
+      meta: {
+        headers: message.headers,
+        storage
+      },
+    };
+
+    try {
+      await writeEvent(params);
+    } catch (e) {
+      console.error('write-event-to-db-error', e);
+      throw e;
+    }
   }
 
-  let response;
-
-  try {
-    const result = await stepfunction.startExecution(params).promise();
-
-    response = {
-      statusCode: 200,
-      body: result,
-    };
-  } catch (e) {
-    console.error(e.message);
-    response = {
-      statusCode: 500,
-      body: 'Something went wrong',
-    };
-  }
-
-  return response;
+  return `Successfully processed ${event.Records.length} messages.`;
 }
