@@ -19,7 +19,7 @@ const writeEvent = (data: MailEventDocument): Promise<object> => {
 export const handler = async (
   event: SQSEvent
 ): Promise<string> => {
-  console.log('Records Received: ', event);
+  console.log('mail-poller-event-received:', event);
   for (const { messageId: id, body } of event.Records) {
     const { Subject: type, Message: eventMessage } : SNSMessage = JSON.parse(body);
     const eventData: MailEventData = JSON.parse(eventMessage)['event-data'];
@@ -39,7 +39,7 @@ export const handler = async (
     try {
       await writeEvent(params);
     } catch (e) {
-      console.error('write-event-to-db-error', e);
+      console.error('mail-poller-write-event-to-db-error', e);
       throw e;
     }
   }
