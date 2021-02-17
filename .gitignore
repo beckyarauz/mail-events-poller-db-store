@@ -3,8 +3,8 @@ aws
 awscli-bundle
 awscli-bundle.zip
 
-#TS
-src/*.ts
+#JS Build
+build
 
 # Logs
 logs
