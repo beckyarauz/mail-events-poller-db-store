@@ -1,10 +1,10 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "target": "es2017",
-    "module": "AMD",
-    "rootDir": "./",
-    "outFile": "./build/build.js",
+    "target": "es2015",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./build",
     "strict": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,

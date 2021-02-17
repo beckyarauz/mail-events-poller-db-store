@@ -18,7 +18,7 @@ stats:
 	docker stats;
 
 test:
-	curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"event-data": {"event": "TestEvent-Local"}}';
+	curl -XPOST "http://localhost:9000/2015-03-31/functions/function/invocations" -d '{"Records": []}';
 
 create-repo:
 	aws ecr create-repository --repository-name ${PROJECT_NAME} --image-scanning-configuration scanOnPush=true --image-tag-mutability MUTABLE;
