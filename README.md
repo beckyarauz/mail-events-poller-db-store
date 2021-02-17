@@ -14,4 +14,4 @@
 6. Make sure the Lambda has the Policies related to read *SQS Messages* and writting access to *DynamoDB* when testing on the console.
 
 # More Documents
-
+[AWS Creating Lambda container images](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html)
