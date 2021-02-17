@@ -3,6 +3,9 @@ aws
 awscli-bundle
 awscli-bundle.zip
 
+#TS
+src/*.ts
+
 # Logs
 logs
 *.log
