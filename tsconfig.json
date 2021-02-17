@@ -2,7 +2,9 @@
   "compileOnSave": true,
   "compilerOptions": {
     "target": "es2017",
-    "module": "commonjs",
+    "module": "AMD",
+    "rootDir": "./",
+    "outFile": "./build/build.js",
     "strict": true,
     "noImplicitAny": false,
     "experimentalDecorators": true,
@@ -23,5 +25,6 @@
     "importHelpers": true,
     "moduleResolution": "node"
   },
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }

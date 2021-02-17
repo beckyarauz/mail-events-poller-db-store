@@ -3,7 +3,8 @@ build-env:
 	docker run -t -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} node:12 node -e 'console.log(process.env.AWS_SECRET_ACCESS_KEY);';
 	docker run -t -e AWS_REGION=${AWS_REGION} node:12 node -e 'console.log(process.env.AWS_REGION);';
 
-build:
+build-image:
+	npm run compile;
 	docker build -t ${PROJECT_NAME} .;
 
 run-local:

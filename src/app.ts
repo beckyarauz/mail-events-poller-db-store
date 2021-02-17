@@ -3,40 +3,7 @@ import {
   SNSMessage,
 } from 'aws-lambda';
 import * as AWS from 'aws-sdk';
-
-export interface MailMessageHeaders {
-  ['message-id']: string;
-  to?: string;
-  from?: string;
-  subject?: string;
-}
-
-export interface MailEventData {
-  id: string;
-  timestamp: number;
-  event: string;
-  message: {
-    headers: MailMessageHeaders
-  };
-  storage?: {
-    url: string;
-    key: string;
-  };
-}
-
-export interface MailEventDocument {
-  id: string;
-  type: string;
-  timestamp: string;
-  eventId: string;
-  meta: {
-    headers: MailMessageHeaders;
-    storage?: {
-      url: string;
-      key: string;
-    };
-  },
-}
+import { MailEventData, MailEventDocument } from './interfaces';
 
 const db = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_REGION });
 
