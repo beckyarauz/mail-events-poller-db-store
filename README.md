@@ -13,5 +13,8 @@
 5. Everytime you update the handler, on the project's terminal run `make build-image`, `make upload` and finally `make update` to update the Lambda function after your changes.
 6. Make sure the Lambda associated Role has the Policies related to read *SQS Messages* and writting access to *DynamoDB* when testing on the console.
 
+# Unit Testing
+All you have to do is run `make test`, it will compile and run the unit test for you.
+
 # More Documents
 [AWS Creating Lambda container images](https://docs.aws.amazon.com/lambda/latest/dg/images-create.html)
