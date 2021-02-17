@@ -5,9 +5,8 @@ import {
 import * as AWS from 'aws-sdk';
 import { MailEventData, MailEventDocument } from './interfaces';
 
-const db = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_REGION });
-
 const writeEvent = (data: MailEventDocument): Promise<object> => {
+  const db = new AWS.DynamoDB.DocumentClient({ region: process.env.AWS_REGION });
   const params = {
     TableName: 'mail-events',
     Item: data,
