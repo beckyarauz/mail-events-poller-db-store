@@ -1,4 +1,6 @@
-export interface MailMessageHeaders {
+import { AttributeValue, BinarySetAttributeValue, PutItemInputAttributeMap } from 'aws-sdk/clients/dynamodb';
+
+export interface MailMessageHeaders extends BinarySetAttributeValue {
   ['message-id']: string;
   to?: string;
   from?: string;
@@ -12,22 +14,32 @@ export interface MailEventData {
   message: {
     headers: MailMessageHeaders
   };
-  storage?: {
-    url: string;
-    key: string;
-  };
+  storage?: StorageObject;
 }
 
-export interface MailEventDocument {
-  id: string;
-  type: string;
-  timestamp: string;
+export interface StorageObject {
+  url: AttributeValue;
+  key: AttributeValue;
+}
+
+export interface MetaData extends AttributeValue {
+  headers: MailMessageHeaders;
+  storage: StorageObject
+}
+
+export interface EventData {
+  message: {
+    headers: MailMessageHeaders
+  };
+  storage?: StorageObject;
+  timestamp: number;
   eventId: string;
-  meta: {
-    headers: MailMessageHeaders;
-    storage?: {
-      url: string;
-      key: string;
-    };
-  },
+}
+
+export interface MailEventDocument extends PutItemInputAttributeMap {
+  eventId: AttributeValue;
+  meta: MetaData;
+  id: AttributeValue;
+  type: AttributeValue;
+  timestamp: AttributeValue
 }

@@ -22,7 +22,7 @@ describe('Mail State Executer Function', async () => {
       expect(params.Item).to.have.property('eventId', unsubscribedEvent['event-data'].id);
       expect(params.Item.meta).to.eql({
         headers: unsubscribedEvent['event-data'].message.headers,
-        storage: undefined
+        storage: { url: '', key: '' }
       });
       return Promise.resolve({});
     });
@@ -34,6 +34,6 @@ describe('Mail State Executer Function', async () => {
   });
 
   after(() => {
-    AWSMock.restore('DynamoDB');
+    AWSMock.restore('DynamoDB.DocumentClient');
   })
 });
