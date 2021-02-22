@@ -7,7 +7,7 @@ export const handler = async (
   event: SQSEvent
 ): Promise<string> => {
   console.log('mail-poller-event-received:', event);
-  new MailEventGenerator(event).generateDBEvents();
+  await new MailEventGenerator(event).generateDBEvents();
 
   return `Successfully processed ${event.Records.length} messages.`;
 }
